@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>storyforge</artifactId>
+        <groupId>com.storyforge</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>storyforge-ai-adapter</artifactId>
+    <description>AI 模型适配层：基于 Spring AI 的模型对接、Prompt 编排、上下文管理</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.storyforge</groupId>
+            <artifactId>storyforge-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.storyforge</groupId>
+            <artifactId>storyforge-domain</artifactId>
+        </dependency>
+
+        <!-- Spring AI OpenAI（兼容所有 OpenAI 格式的模型） -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-model-openai</artifactId>
+        </dependency>
+        <!-- Spring AI Alibaba DashScope（通义千问） -->
+        <dependency>
+            <groupId>com.alibaba.cloud.ai</groupId>
+            <artifactId>spring-ai-alibaba-starter-dashscope</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>
