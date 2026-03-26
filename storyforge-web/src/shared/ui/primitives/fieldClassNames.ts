@@ -1,0 +1,2 @@
+export const inputBaseClassName =
+  'h-11 w-full rounded-[var(--radius-control)] border border-border bg-surface shadow-[0_1px_2px_rgba(0,0,0,0.02)] px-3.5 text-[15px] text-text outline-none transition-all duration-200 placeholder:text-text-subtle hover:border-border-strong focus:border-border-strong focus:ring-[3px] focus:ring-ring aria-[invalid=true]:border-danger aria-[invalid=true]:bg-danger-soft/10 aria-[invalid=true]:focus:border-danger aria-[invalid=true]:focus:ring-danger/20 disabled:cursor-not-allowed disabled:bg-surface-subtle disabled:text-text-subtle'

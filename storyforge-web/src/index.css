@@ -1,0 +1,218 @@
+@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+
+  --color-surface: var(--surface);
+  --color-surface-subtle: var(--surface-subtle);
+  --color-surface-sunken: var(--surface-sunken);
+
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-subtle: var(--text-subtle);
+  --color-text-inverse: var(--text-inverse);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ring: var(--ring);
+
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-hover: var(--danger-hover);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+}
+
+@utility focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-ring)];
+}
+
+@layer base {
+  :root {
+    /* V2 Minimal / Vercel-like Palette */
+
+    /* Monochrome Backgrounds */
+    --surface: #ffffff;
+    --surface-subtle: #fafafa;
+    --surface-sunken: #f4f4f5;
+
+    /* High contrast grayscale typography */
+    --text: #09090b;
+    /* Zinc 950 */
+    --text-muted: #52525b;
+    /* Zinc 600 */
+    --text-subtle: #a1a1aa;
+    /* Zinc 400 */
+    --text-inverse: #ffffff;
+
+    /* Crisp, almost invisible borders */
+    --border: #e4e4e7;
+    /* Zinc 200 */
+    --border-strong: #d4d4d8;
+    /* Zinc 300 */
+    --ring: rgba(9, 9, 11, 0.1);
+
+    /* Accent - Dark Monochrome replacing the old vivid Indigo */
+    --primary: #09090b;
+    /* Zinc 950 for primary buttons */
+    --primary-hover: #27272a;
+    /* Zinc 800 */
+    --primary-soft: #f4f4f5;
+    /* Zinc 100 */
+
+    /* Status Colors (Soft Pastel for modern look) */
+    --danger: #ef4444;
+    --danger-soft: #fef2f2;
+    --danger-hover: #dc2626;
+
+    --success: #10b981;
+    --success-soft: #ecfdf5;
+
+    --warning: #f59e0b;
+    --warning-soft: #fffbeb;
+
+    /* Sharper, geometric radii */
+    --radius-control: 0.375rem;
+    /* 6px */
+    --radius-panel: 0.75rem;
+    /* 12px */
+    --radius-modal: 1rem;
+    /* 16px */
+    --radius-badge: 9999px;
+  }
+
+  /* Force border color fallback to minimal border */
+  * {
+    border-color: var(--border);
+    box-sizing: border-box;
+  }
+
+  html {
+    min-height: 100%;
+    background: var(--surface-subtle);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--surface);
+    color: var(--text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body,
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    margin: 0;
+  }
+
+  button {
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img,
+  picture,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Typographic crispness */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: var(--primary-soft);
+    color: var(--primary-hover);
+  }
+}
+
+/* V2 Advanced Deep Shadow System */
+@layer utilities {
+  .shadow-card {
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.04),
+      0 2px 5px rgba(0, 0, 0, 0.03),
+      0 12px 24px rgba(0, 0, 0, 0.02);
+  }
+
+  .shadow-card-hover {
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.06),
+      0 8px 16px rgba(0, 0, 0, 0.04),
+      0 24px 48px rgba(0, 0, 0, 0.04);
+  }
+
+  .shadow-modal {
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.08),
+      0 10px 15px -3px rgba(0, 0, 0, 0.06),
+      0 40px 80px -12px rgba(0, 0, 0, 0.15);
+  }
+
+  .shadow-popover {
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.06),
+      0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* NProgress styling (Loading Bar) overrides */
+#nprogress .bar {
+  background: var(--primary) !important;
+  height: 2px !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--primary), 0 0 5px var(--primary) !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: var(--primary) !important;
+  border-left-color: var(--primary) !important;
+}

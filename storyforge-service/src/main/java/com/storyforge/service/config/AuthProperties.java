@@ -20,4 +20,6 @@ public class AuthProperties {
     private int registerEmailCodeExpireSeconds = 300;
     private int registerEmailResendSeconds = 60;
     private String mailFrom;
+    private boolean devFixedRegisterEmailCodeEnabled;
+    private String devFixedRegisterEmailCode = "123456";
 }

@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8001
 
 spring:
   application:
@@ -41,6 +41,23 @@ auth:
   captcha-circle-count: 20
   register-email-code-expire-seconds: 300
   register-email-resend-seconds: 60
+  dev-fixed-register-email-code-enabled: false
+  dev-fixed-register-email-code: 123456
+
+storyforge:
+  cors:
+    allowed-origins: []
+    allowed-methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - OPTIONS
+    allowed-headers:
+      - Authorization
+      - Content-Type
+      - X-Client-Fingerprint
+    max-age-seconds: 3600
 
 # SpringDoc (Swagger)
 springdoc:

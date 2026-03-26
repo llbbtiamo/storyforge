@@ -5,10 +5,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.storyforge.common.exception.BusinessException;
 import com.storyforge.domain.dto.WorldSettingCreateRequest;
 import com.storyforge.domain.dto.WorldSettingUpdateRequest;
+import com.storyforge.domain.entity.Project;
 import com.storyforge.domain.entity.WorldSetting;
 import com.storyforge.domain.vo.WorldSettingVO;
+import com.storyforge.mapper.ProjectMapper;
 import com.storyforge.mapper.WorldSettingMapper;
-import com.storyforge.service.IProjectService;
 import com.storyforge.service.IWorldSettingService;
 import com.storyforge.service.IWorldTemplateService;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +26,12 @@ import java.util.Objects;
 public class WorldSettingServiceImpl extends ServiceImpl<WorldSettingMapper, WorldSetting>
         implements IWorldSettingService {
 
-    private final IProjectService projectService;
+    private final ProjectMapper projectMapper;
     private final IWorldTemplateService worldTemplateService;
 
     @Override
     public List<WorldSettingVO> listWorldSettings(Long userId, Long projectId) {
-        projectService.getOwnedProjectOrThrow(userId, projectId);
+        getOwnedProjectOrThrow(userId, projectId);
         return listProjectWorldSettings(projectId).stream().map(this::toVO).toList();
     }
 
@@ -41,7 +42,7 @@ public class WorldSettingServiceImpl extends ServiceImpl<WorldSettingMapper, Wor
 
     @Override
     public WorldSettingVO createWorldSetting(Long userId, Long projectId, WorldSettingCreateRequest request) {
-        projectService.getOwnedProjectOrThrow(userId, projectId);
+        getOwnedProjectOrThrow(userId, projectId);
         WorldSetting worldSetting = new WorldSetting();
         worldSetting.setProjectId(projectId);
         worldSetting.setTemplateId(null);
@@ -94,7 +95,7 @@ public class WorldSettingServiceImpl extends ServiceImpl<WorldSettingMapper, Wor
     @Transactional
     public void copyTemplateSettingsToProject(Long userId, Long templateId, Long projectId,
             boolean overwriteExistingSettings) {
-        projectService.getOwnedProjectOrThrow(userId, projectId);
+        getOwnedProjectOrThrow(userId, projectId);
         worldTemplateService.getAccessibleWorldTemplateOrThrow(userId, templateId);
         List<WorldSetting> templateSettings = listTemplateSettings(templateId);
         if (templateSettings.isEmpty()) {
@@ -119,7 +120,7 @@ public class WorldSettingServiceImpl extends ServiceImpl<WorldSettingMapper, Wor
     @Override
     @Transactional
     public void copyProjectSettingsToTemplate(Long userId, Long projectId, Long templateId) {
-        projectService.getOwnedProjectOrThrow(userId, projectId);
+        getOwnedProjectOrThrow(userId, projectId);
         worldTemplateService.getOwnedWorldTemplateOrThrow(userId, templateId);
         List<WorldSetting> projectSettings = listProjectWorldSettings(projectId);
         if (projectSettings.isEmpty()) {
@@ -145,7 +146,7 @@ public class WorldSettingServiceImpl extends ServiceImpl<WorldSettingMapper, Wor
     }
 
     private WorldSetting getOwnedWorldSettingOrThrow(Long userId, Long projectId, Long worldSettingId) {
-        projectService.getOwnedProjectOrThrow(userId, projectId);
+        getOwnedProjectOrThrow(userId, projectId);
         WorldSetting worldSetting = getOne(new LambdaQueryWrapper<WorldSetting>()
                 .eq(WorldSetting::getId, worldSettingId)
                 .eq(WorldSetting::getProjectId, projectId));
@@ -164,6 +165,16 @@ public class WorldSettingServiceImpl extends ServiceImpl<WorldSettingMapper, Wor
             throw new BusinessException(404, "世界观设定不存在");
         }
         return worldSetting;
+    }
+
+    private Project getOwnedProjectOrThrow(Long userId, Long projectId) {
+        Project project = projectMapper.selectOne(new LambdaQueryWrapper<Project>()
+                .eq(Project::getId, projectId)
+                .eq(Project::getUserId, userId));
+        if (project == null) {
+            throw new BusinessException(404, "项目不存在");
+        }
+        return project;
     }
 
     private List<WorldSetting> listProjectWorldSettings(Long projectId) {
