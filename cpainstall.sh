@@ -253,7 +253,7 @@ EOF
 
 cat > "$INSTALL_DIR/config/web_config.json" <<EOF
 {
-  "target_min_tokens": 15000,
+  "target_min_tokens": 200,
   "auto_fill_start_gap": 1,
   "check_interval_minutes": 1,
   "manual_default_threads": ${THREADS},
